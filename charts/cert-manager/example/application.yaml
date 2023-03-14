@@ -1,0 +1,35 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+    name: cert-manager
+    labels:
+        riotkit.org/type: "infra"
+spec:
+    project: "cert-manager"
+    sources:
+        - chart: cert-manager
+          repoURL: xxxxxx
+          targetRevision: "..."
+          helm:
+              releaseName: 'cert-manager'
+              values: |
+                  ...
+
+        - repoURL: ghcr.io/riotkit/charts/argo-space-harbor/cert-manager
+          targetRevision: 1.0
+          helm:
+              releaseName: 'cert-manager-config'
+              values: |
+                  email: example@example.org
+
+    destination:
+        server: https://kubernetes.default.svc
+        namespace: db
+
+    syncPolicy:
+        automated:
+            prune: false
+        syncOptions:
+            - FailOnSharedResource=true
+            - CreateNamespace=false

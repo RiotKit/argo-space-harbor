@@ -1,0 +1,18 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+    name: cert-manager
+    namespace: argocd
+spec:
+    description: 'Cert Manager deployment project'
+    clusterResourceWhitelist: []
+    namespaceResourceBlacklist: []
+    namespaceResourceWhitelist:
+        - group: 'xxx'
+          kind: yyy
+    destinations:
+        - namespace: 'cert-manager'
+          server: 'https://kubernetes.default.svc'
+    sourceRepos:
+        - '...'

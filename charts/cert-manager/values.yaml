@@ -1,0 +1,3 @@
+email: example@example.org
+ingress:
+    class: nginx
